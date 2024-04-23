@@ -1,9 +1,9 @@
 <?php
 
-    if($_SERVER["REQUEST_METHOD"] == "GET") {
-        $username = $_GET["username"];
-        $pwd = $_GET["pwd"];
-        $email = $_GET["email"];
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $username = $_POST["username"];
+        $pwd = $_POST["pwd"];
+        $email = $_POST["email"];
 
         try {
             require_once "dbh.inc.php";
@@ -30,6 +30,13 @@
 
             if($errors) {
                 $_SESSION["errors_signup"] = $errors;
+
+                $signup_data = [
+                    "username" => $username,
+                    "email" => $email
+                ];
+                $_SESSION["signup_data"] = $signup_data;
+
                 header("Location: ../index.php");
                 die();
             }

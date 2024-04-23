@@ -13,7 +13,7 @@
 <body>
     <h3>Login</h3>
     <div>
-        <form action="includes/login.inc.php" method="get">
+        <form action="includes/login.inc.php" method="post">
             <input type="text" name="username" placeholder="User Name">
             <input type="password" name="pwd" placeholder="Password">
             <button>Login</button>
@@ -22,10 +22,10 @@
 
     <h3>Signup</h3>
     <div>
-        <form action="includes/signup.inc.php" method="get">
-            <input type="text" name="username" placeholder="User Name">
-            <input type="password" name="pwd" placeholder="Password">
-            <input type="text" name="email" placeholder="E-mail">
+        <form action="includes/signup.inc.php" method="post">
+            <?php
+                signup_data();
+            ?>
             <button>Signup</button>
         </form>
     </div>
