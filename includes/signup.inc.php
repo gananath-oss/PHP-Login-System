@@ -1,9 +1,9 @@
 <?php
 
-    if($_SESSION["REQUEST_METHOD"] === "POST") {
-        $username = $_POST["username"];
-        $pwd = $_POST["pwd"];
-        $email = $_POST["email"];
+    if($_SERVER["REQUEST_METHOD"] == "GET") {
+        $username = $_GET["username"];
+        $pwd = $_GET["pwd"];
+        $email = $_GET["email"];
 
         try {
             require_once "dbh.inc.php";
@@ -26,10 +26,28 @@
                 $errors["email_used"] = "E-mail already registered!";
             }
 
+            require_once "config_session.inc.php";
+
+            if($errors) {
+                $_SESSION["errors_signup"] = $errors;
+                header("Location: ../index.php");
+                die();
+            }
+
+            create_user($pdo, $username, $pwd, $email);
+
+            header("Location: ../index.php?signup=success");
+            
+            $pdo = null;
+            $stmt = null;
+         
+            die();
+
         } catch (PDOException $e) {
-            die("Query failed: " . $e->getMessage())
+            die("Query failed: " . $e->getMessage());
         }
-    } else {
+    } 
+    else {
         header("Location: ../index.php");
         die();
     }
